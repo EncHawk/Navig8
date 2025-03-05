@@ -3,7 +3,7 @@
 {% block title %}User Login{% endblock %}
 
 {% block content %}
-<div class="login-container">
+<div class="login-container, container-fluid" style="margin: 10px 0px; width: 500px;">
     <form id="loginForm" action="{{ url_for('login') }}" method="post" onsubmit="return validateForm()">
         <div class="form-group">
             <input type="text" 
