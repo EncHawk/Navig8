@@ -16,23 +16,34 @@ def home():
   return render_template("home_page.html")
 
 
-@app.route("/login" , methods = ["POST", "GET"])
+@app.route("/login", methods=["POST", "GET"])
 def login():
-  if request.method == "POST":
-    usr_nm = request.form["user_name"]
-    usr_email= request.form["user_email"]
-    session.permanent=True
-    session["user_name"] = usr_nm
-    session["user_email"] = usr_email
-    if usr_nm in session:
-      flash(f"user already exists under the name: {usr_nm} and email: {usr_email}")
-      return render_template("home_page.html", name=usr_nm , email=usr_email)
+    if request.method == "POST":
+        usr_nm = request.form["user_name"]
+        usr_email = request.form["user_email"]
+        
+        # Check if user is already in session
+        if "user_name" in session:
+            flash(f"User {usr_nm} is already logged in!", "warning")
+            return render_template("home_page.html", name=usr_nm, email=usr_email)
+        
+        # Store user information in session
+        session["user_name"] = usr_nm
+        session["user_email"] = usr_email
+        
+        # Redirect to display page
+        flash(f"Welcome, {usr_nm}!", "success")
+        return render_template("display.html", name=usr_nm, email=usr_email)
     
-    return render_template("display.html", name=usr_nm , email=usr_email)
-  
-  else:
-    flash("user logged out or does not exist in current session")
-    return render_template("form.html")
+    else:  # GET method
+        # If user is already in session, redirect to home page
+        if "user_name" in session:
+            usr_nm = session["user_name"]
+            flash(f"Welcome back, {usr_nm}!", "info")
+            return render_template("home_page.html", name=usr_nm)
+        
+        # No active session, show login form
+        return render_template("form.html")
     
 @app.route("/logout")
 def logout():

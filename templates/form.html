@@ -3,8 +3,22 @@
 {% block title %}User Login{% endblock %}
 
 {% block content %}
-<div class="login-container, container-fluid" style="margin: 10px 0px; width: 500px;">
-    <form id="loginForm" action="{{ url_for('login') }} " method="post" onsubmit="return validateForm()">
+
+
+
+<div class="login-container, container-fluid" style=" width: 500px;">
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <form id="loginForm" action="" method="post" onsubmit="return validateForm()">
         <div class="form-group">
             <input type="text" 
                    name="user_name" 
