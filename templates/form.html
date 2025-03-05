@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}User Login{% endblock %}
+
+{% block content %}
+<div class="login-container">
+    <form id="loginForm" action="{{ url_for('login') }}" method="post" onsubmit="return validateForm()">
+        <div class="form-group">
+            <input type="text" 
+                   name="user_name" 
+                   id="username" 
+                   autocomplete="off" 
+                   autofocus 
+                   placeholder="Enter name" 
+                   required 
+                   class="form-control">
+        </div>
+        <hr color="lightblue">
+        <div class="form-group">
+            <input type="email" 
+                   name="user_email" 
+                   id="email" 
+                   autocomplete="off" 
+                   placeholder="Enter email" 
+                   required 
+                   class="form-control">
+        </div>
+        <hr color="lightblue">
+        <div class="form-group">
+            <input type="submit" 
+                   name="submit" 
+                   value="Login" 
+                   class="btn btn-primary">
+        </div>
+    </form>
+</div>
+
+<script>
+function validateForm() {
+    // Get input values
+    const username = document.getElementById('username').value.trim();
+    const email = document.getElementById('email').value.trim();
+
+    // Check if either field is empty
+    if (username === '' || email === '') {
+        alert('Please fill in both name and email fields.');
+        return false; // Prevent form submission
+    }
+
+    // Optional: Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        alert('Please enter a valid email address.');
+        return false;
+    }
+
+    return true; // Allow form submission
+}
+</script>
+{% endblock %}
