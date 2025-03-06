@@ -3,7 +3,20 @@
 
 {%block title%} Navig8 's data  {%endblock%}
 
+{%block link %}     <link rel="icon" href=
+"https://media.geeksforgeeks.org/wp-content/cdn-uploads/gfg_200X200.png"
+        type="image/x-icon" />{%endblock%}
 
 
 
-{%block content%}  {%endblock%}
+
+{%block content%}  
+
+{%for item in values%} 
+
+<p> name : {{item.usr_name}} , email:{{item.usr_email}}, role={{item.role}} </p>
+ 
+{%endfor%}
+
+
+{%endblock%}

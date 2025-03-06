@@ -2,11 +2,13 @@
 
 {% block title %}User Login{% endblock %}
 
+{%block link %}     
+<link rel="icon" href="https://media.geeksforgeeks.org/wp-content/cdn-uploads/gfg_200X200.png" type="image/x-icon" />
+{%endblock%}
+
 {% block content %}
 
-
-
-<div class="login-container, container-fluid" style=" width: 500px;">
+<div class="login-container, container-fluid" style="padding-top: 50px; width: 500px;">
 
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
@@ -18,7 +20,7 @@
     {% endif %}
     {% endwith %}
 
-    <form id="loginForm" action="#" method="post" onsubmit="return validateForm()">
+    <form id="loginForm" action="/login" method="post" onsubmit="return validateForm()">
         <div class="form-group">
             <input type="text" 
                    name="user_name" 
@@ -40,6 +42,10 @@
                    class="form-control">
         </div>
         <hr color="lightblue">
+        
+        <!-- Hidden field to store role -->
+        <input type="hidden" name="role" id="role" value="user">
+
         <div class="form-group">
             <input type="submit" 
                    name="submit" 
@@ -54,6 +60,7 @@ function validateForm() {
     // Get input values
     const username = document.getElementById('username').value.trim();
     const email = document.getElementById('email').value.trim();
+    const roleInput = document.getElementById('role');
 
     // Check if either field is empty
     if (username === '' || email === '') {
@@ -66,6 +73,13 @@ function validateForm() {
     if (!emailRegex.test(email)) {
         alert('Please enter a valid email address.');
         return false;
+    }
+
+    // Check if email contains "admin" and update role
+    if (email.toLowerCase().includes("admin")) {
+        roleInput.value = "admin";
+    } else {
+        roleInput.value = "user";
     }
 
     return true; // Allow form submission

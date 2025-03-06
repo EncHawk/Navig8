@@ -19,22 +19,20 @@
 {% endwith %}
 
 {% if "user_name" in session: %} 
-
     <div style="color: black;">
-        <a href="form.html"> {{user_name}}</a>
+        <a href="/login"> {{name}}</a>
     </div>
+    {%else %}
+    <i><a href="/login"> t</a></i> 
 
 {%endif%}
+
+
+
 
 {%endblock%}
 
 {%block content%} 
-
-<i><a href="form.html"> t{{usr_nm}}</a></i> 
-
-<div style="color:black">
-    <a href="/login"> {{name}}</a>
-</div>
-
+<h2> this is from the content block</h2>
 
 {%endblock%}

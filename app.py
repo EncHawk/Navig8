@@ -13,9 +13,9 @@ app.permanent_session_lifetime= timedelta(minutes=5)
 db= SQLAlchemy(app)
 
 
-class Users(db.Model):  
+class users(db.Model):  
     id = db.Column(db.Integer, primary_key=True) 
-    usr_name = db.Column(db.String, nullable=False)  
+    usr_name = db.Column(db.String, nullable=False, unique=True)  
     usr_email = db.Column(db.String, nullable=False, unique=True)
     role = db.Column(db.String, nullable=False)
 
@@ -30,35 +30,53 @@ class Users(db.Model):
 def home():
   return render_template("home_page.html")
 
+@app.route("/view_data")
+def view_data():
+    return render_template("show_data.html", values= users.query.all())
+
 
 @app.route("/login", methods=["POST", "GET"])
 def login():
     if request.method == "POST":
         usr_nm = request.form["user_name"]
         usr_email = request.form["user_email"]
-        
-        # Check if user is already in session
-        if "user_name" in session:
-            flash(f"User {usr_nm} is already logged in!", "warning")
-            return render_template("home_page.html", name=usr_nm, email=usr_email)
-        
-        # Store user information in session
+        role = request.form["role"]
+
+        # Check if user exists in the database
+        found_user = users.query.filter_by(usr_name=usr_nm).first()
+
+        if found_user:
+            session["email"] = found_user.usr_email
+            session["role"] = found_user.role  # Store role in session
+        else:
+            # Create new user (default role: "user")
+            usr = users(usr_nm, usr_email, role)
+            db.session.add(usr)
+            db.session.commit()
+            session["email"] = usr_email
+            session["role"] = role
+
+        # store user info in session
         session["user_name"] = usr_nm
         session["user_email"] = usr_email
-        
-        # Redirect to display page
-        flash(f"Welcome, {usr_nm}!", "success")
+
+        if session["role"] == "admin":
+            flash(f"Welcome Admin {usr_nm}!", "success")
+        else:
+            flash(f"Welcome, {usr_nm}!", "success")
         return render_template("home_page.html", name=usr_nm, email=usr_email)
-    
+
     else:  # GET method
-        # If user is already in session, redirect to home page
         if "user_name" in session:
             usr_nm = session["user_name"]
             flash(f"Welcome back, {usr_nm}!", "info")
             return render_template("home_page.html", name=usr_nm)
-        
-        # No active session, show login form
+
         return render_template("form.html")
+
+
+
+
     
 @app.route("/logout")
 def logout():
