@@ -44,6 +44,7 @@
     <div>
         <a href="/logout"> Logout</a>
     </div>
+
 </div>
 
 {%endblock%}
@@ -54,24 +55,19 @@
 <hr color="green">
 
 
-<div class=" events-tab">
+<div class="events-tab">
     <p class="events-div-name">
         Events are as follows
     </p>
-    <div class="event">
-        <p class="event-title"> Eonica - Cultural Fiesta, <span class="uni-name">Berserk University</span></p>
-        <div class="flair"> 
-            Cultural
+    
+    {% for event in events %}
+        <div class="event">
+            <p class="event-title">{{ events }} <span class="uni-name">{{ event.evnt_uni }}</span></p>
+            <div class="flair"> 
+                {{ event.evnt_flair }}
+            </div>
         </div>
-    </div>
-
-    <div class="event">
-        <p class="event-title"> Astromia, <span class="uni-name">Hustlers University</span></p>
-        <div class="flair"> 
-            Academic
-        </div>
-    </div>
-
+    {% endfor %}
 </div>
 
 {%endblock%}
