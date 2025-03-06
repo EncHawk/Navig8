@@ -69,7 +69,7 @@ def login():
     else:  # GET method
         if "user_name" in session:
             usr_nm = session["user_name"]
-            flash(f"Welcome back, {usr_nm}!", "info")
+            flash(f"User already existed. Welcome back, {usr_nm}!", "info")
             return render_template("home_page.html", name=usr_nm)
 
         return render_template("form.html")
