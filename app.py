@@ -26,7 +26,7 @@ class users(db.Model):
 
 
 
-@app.route("/home")
+@app.route("/")
 def home():
   return render_template("home_page.html")
 
