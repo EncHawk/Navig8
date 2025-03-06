@@ -6,12 +6,35 @@
 "https://media.geeksforgeeks.org/wp-content/cdn-uploads/gfg_200X200.png"
         type="image/x-icon" />{%endblock%}
 
-{%block user_login%} 
+{%block user_login%}
 
-name : {{name}} 
-<hr color="red">
-emai :{{email}}
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }}">
+        {{ message }}
+    </div>
+    {% endfor %}
+{% endif %}
+{% endwith %}
+
+{% if "user_name" in session: %} 
+
+    <div style="color: black;">
+        <a href="form.html"> {{user_name}}</a>
+    </div>
+
+{%endif%}
 
 {%endblock%}
 
-{%block content%} <i>this is the content we need heeheheheh</i> {%endblock%}
+{%block content%} 
+
+<i><a href="form.html"> t{{usr_nm}}</a></i> 
+
+<div style="color:black">
+    <a href="/login"> {{name}}</a>
+</div>
+
+
+{%endblock%}

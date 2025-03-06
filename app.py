@@ -9,9 +9,24 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.sqlite3'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.permanent_session_lifetime= timedelta(minutes=5)
 
+
 db= SQLAlchemy(app)
 
-@app.route("/")
+
+class Users(db.Model):  
+    id = db.Column(db.Integer, primary_key=True) 
+    usr_name = db.Column(db.String, nullable=False)  
+    usr_email = db.Column(db.String, nullable=False, unique=True)
+    role = db.Column(db.String, nullable=False)
+
+    def __init__(self, usr_name, usr_email, role):
+        self.usr_name = usr_name  
+        self.usr_email = usr_email  
+        self.role = role  
+
+
+
+@app.route("/home")
 def home():
   return render_template("home_page.html")
 
@@ -33,7 +48,7 @@ def login():
         
         # Redirect to display page
         flash(f"Welcome, {usr_nm}!", "success")
-        return render_template("display.html", name=usr_nm, email=usr_email)
+        return render_template("home_page.html", name=usr_nm, email=usr_email)
     
     else:  # GET method
         # If user is already in session, redirect to home page
@@ -47,11 +62,14 @@ def login():
     
 @app.route("/logout")
 def logout():
-  flash("User logged out .")
-  session.pop("user", None)
-  session.pop("email", None)
+  flash("User logged out of the session.")
+  session.pop("user_name", None)
+  session.pop("email_name", None)
   return redirect(url_for("login"))
 
 
 if __name__ == "__main__":
   app.run(debug=True)
+
+with app.app_context():
+    db.create_all()
