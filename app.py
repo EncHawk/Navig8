@@ -101,7 +101,7 @@ def add_event():
 
     flash("Event added successfully!", "success")
     return redirect(url_for("admin"))  # Redirect back to admin page
-
+    
 
 @app.route("/add_announcement", methods=["POST","GET"])
 def announcement():
