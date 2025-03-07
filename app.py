@@ -1,8 +1,14 @@
 from flask import Flask, redirect, url_for, render_template, request, session, flash
 from datetime import timedelta
 from flask_sqlalchemy import SQLAlchemy
+import os
 
-app = Flask(__name__)
+
+PEOPLE_FOLDER = os.path.join('static', 'images')
+
+
+app = Flask(__name__ , static_folder='static')
+app.config['UPLOAD_FOLDER'] = PEOPLE_FOLDER
 app.secret_key = "beep"
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.sqlite3'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -42,6 +48,7 @@ class announcements(db.Model):
         self.uni_name=uni_name
 
 @app.route("/")
+@app.route("/home")
 def home():
     all_events = events.query.all()
 
@@ -51,7 +58,8 @@ def home():
         user_name = session["user_name"]
     else:
         user_name = None
-    return render_template("home_page.html", events=all_events, name=user_name)
+    berserk_img= os.path.join(app.config['UPLOAD_FOLDER'], 'L.png')
+    return render_template("home_page.html", events=all_events, name=user_name, berserk_img= berserk_img)
 
 @app.route("/view_data")
 def view_data():
@@ -121,7 +129,17 @@ def announcement():
         # user is admin and still somehow tries to add events or take admin actions:
         #return redirect(url_for("admin"))
         
+@app.route("/berserk")
+def  berserk():
+    berserk0_img=os.path.join(app.config['UPLOAD_FOLDER'], 'L0.jpg')
+    berserk1_img=os.path.join(app.config['UPLOAD_FOLDER'], 'L1.png')
+    berserk2_img=os.path.join(app.config['UPLOAD_FOLDER'], 'L2.png')
+    berserki_img=os.path.join(app.config['UPLOAD_FOLDER'], 'Linfo.png')
+    return render_template("berserk.html", berserk0_img=berserk0_img, berserk1_img=berserk1_img, berserk2_img=berserk2_img, berserki_img=berserki_img) 
 
+@app.route("/hustler")
+def hustler ():
+    return render_template("hustler.html")
 
 
 @app.route("/login", methods=["POST", "GET"])

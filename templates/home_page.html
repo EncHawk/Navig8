@@ -62,88 +62,49 @@
     
     {% for event in events %}
         <div class="event">
-            <p class="event-title"> {{ event.name }} <span class="uni-name">{{ event.uni_name }}</span></p>
+            <p class="event-title"> {{event.evnt_title}} <span class="uni-name">{{ event.evnt_uni }}</span></p>
             <div class="flair"> 
-                {{ event.flair }}
+                {{event.evnt_flair}}
             </div>
         </div>  
     {% endfor %}
 </div>
 
-<div class="events-tab">
-    <p class="events-div-name">
+<div class="announcement-tab">
+    <p class="announcement-div-name">
         Announcements from our end
     </p>
     
     {% for ann in announcements %}
-        <div class="event">
-            <p class="event-title"> {{ ann.ann_name }} <span class="uni-name">{{ ann.uni_name }}</span></p>
+        <div class="announcement">
+            <p class="announcement-title"> {{ ann.ann_name }} <span class="uni-name">{{ ann.uni_name }}</span></p>
         </div>
     {% endfor %}
 </div>
 
 <div class="container-fluid search-wrapper">
     <label for="search">Search Users</label>
-    <input type="search" id="search" data-search>
-  </div>
-  <div class="container-fluid user-cards" data-user-cards-container></div>
+    <input type="search" id="search" placeholder="college name">
+</div>
 
-  
-  <template data-user-template>
-    <div class="anchor-container">
+  <div class="images-container">
+    <div class="image">
+        <a href="/berserk">
+            <figure>
+                <img class="clg-imgs" src= "{{berserk_img}}">
+                <figcaption> Berserk University</figcaption>
+            </figure>
+        </a>
 
-            <div class="card">
-                <div class="header-card">
-                  <p>
-                      Greenfield University
-                  </p>
-                </div>
-                <div class="body">
-                  contact@greenfield.edu
-                </div>
-              </div>
+        <a href="/berserk">
+            <figure>
+                <img class="clg-imgs" src= "{{berserk_img}}">
+                <figcaption> Berserk University</figcaption>
+            </figure>
+        </a>
     </div>
-  </template>
 
-{%endblock%}
-
-{%block script%} 
-<script>
-const userCardTemplate = document.querySelector("[data-user-template]")
-const userCardContainer = document.querySelector("[data-user-cards-container]")
-const searchInput = document.querySelector("[data-search]")
-
-let users = [
-  { name: "Greenfield University", email: "contact@greenfield.edu" },
-  { name: "Riverside Institute of Technology", email: "info@riversideit.edu" },
-  { name: "Mountainview College", email: "admissions@mountainview.edu" },
-  { name: "Westwood University", email: "support@westwood.edu" },
-  { name: "Summit State College", email: "hello@summitstate.edu" }
-]
-
-users.forEach(user => {
-  const card = userCardTemplate.content.cloneNode(true).children[0]
-  const header = card.querySelector("[data-header]")
-  const body = card.querySelector("[data-body]")
-  header.textContent = user.name
-  body.textContent = user.email
-  userCardContainer.append(card)
-  user.element = card
-})
-
-searchInput.addEventListener("input", e => {
-  const value = e.target.value.toLowerCase()
-  users.forEach(user => {
-    const isVisible =
-      user.name.toLowerCase().includes(value) ||
-      user.email.toLowerCase().includes(value)
-    user.element.classList.toggle("hide", !isVisible)
-  })
-})
-
-
-
-</script>
+  </div>
 
 
 {%endblock%}
