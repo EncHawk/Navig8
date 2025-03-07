@@ -53,15 +53,30 @@ def view_data():
 def admin():
     if "role" in session and session["role"] == "admin":
         return render_template("admin-form.html")
+    #instead of going directly to the admin form or smtn we can make a intermediary page that admins can access and that can hold links to all these forms
     else:
         flash("Access denied. Admin privileges required.", "danger")
         return render_template("home_page.html")
     
 
+@app.route("/clear_events")
+def clear_events():
+    # if user not admin gtfo :)
+    if "role" not in session or session["role"] != "admin":
+        flash("Access denied. Admin privileges required.", "danger")
+        return redirect(url_for("home"))
+    
+    #else remove all events
+    db.session.query(events).delete()
+    db.session.commit()
+    
+    flash("All events have been cleared!", "success")
+    return redirect(url_for("home"))
+
 
 @app.route("/add_event", methods=["POST", "GET"])
 def add_event():
-    # Check if user is admin
+    # if user is admin
     if "role" not in session or session["role"] != "admin":
         flash("Access denied. Admin privileges required.", "danger")
         return render_template("home_page.html")
@@ -71,7 +86,7 @@ def add_event():
         event_uni = request.form["uni_name"]
         flair = request.form["flair"]
         
-        # Create a new event
+        # new event
         new_event = events(event_name, event_uni, flair)
         db.session.add(new_event)
         db.session.commit()
@@ -79,7 +94,7 @@ def add_event():
         flash("Event added successfully!", "success")
         return render_template("home_page.html")
     else:
-        # If someone tries to access this route with GET
+        # user is admin and still somehow tries to add events or take admin actions:
         return redirect(url_for("admin"))
     
 
@@ -92,6 +107,11 @@ def login():
         usr_nm = request.form["user_name"]
         usr_email = request.form["user_email"]
         role = request.form["role"]
+
+        if "user_name" in session:
+            flash(f"User already logged in.", "info")
+            return redirect(url_for("home"))
+    
 
         found_user = users.query.filter_by(usr_name=usr_nm).first()
         if found_user:
@@ -110,10 +130,7 @@ def login():
         flash(f"Welcome {usr_nm}!", "success")
         return redirect(url_for("home"))
     
-    if "user_name" in session:
-        flash(f"User already logged in.", "info")
-        return redirect(url_for("home"))
-    
+
     return render_template("form.html")
 
 @app.route("/logout")

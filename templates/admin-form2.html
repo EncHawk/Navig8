@@ -24,20 +24,12 @@
 
 
 {%block content%} 
-<form action="/add_event" method="POST">
-  <label for="name">Event Name:</label>
-  <input type="text" id="name" name="name" required>
+<form action="/add_announcement" method="POST">
+  <label for="name"> Announcement </label>
+  <input type="text" id="ann_name" name="ann_name" required>
 
   <label for="name">Event university:</label>
   <input type="text" id="uni_name" name="uni_name" required>
-
-  <label for="flair">Flair:</label>
-
-  <select id="flair" name="flair">
-      <option value="Cultural">Cultural</option>
-      <option value="Educational">Technical</option>
-      <option value="Sports">Sports</option>
-  </select>
 
   <button type="submit">Add Event</button>
 </form>
