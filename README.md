@@ -2,7 +2,7 @@ this is a project for the March Mania hackathon, this includes all the source co
 
 navig8 is a web-application that allows students froma across the world to access the colleges' infrastructure and other details from the comfort of their own homes.
 
-## how to run :
+## Requirements to Run:
 ensure python is installed locally with flask and sql alchemy included in packages
 if not you can try to run a :
 
@@ -19,8 +19,8 @@ Navig8 uses the following stack :
              Flask for handling backend transactions
   front-end:- HTML, CSS using Bootstrap and JavaScript.
 
-## HOW TO RUN:
-          Python app.py
+## How to run:
+         Python app.py
 
 and open the local ip address on your brower. it should show the link on the console.
 
