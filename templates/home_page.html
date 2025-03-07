@@ -62,12 +62,28 @@
     
     {% for event in events %}
         <div class="event">
-            <p class="event-title"> {{ event.evnt_title }} <span class="uni-name">{{ event.evnt_uni }}</span></p>
+            <p class="event-title"> {{ event.name }} <span class="uni-name">{{ event.uni_name }}</span></p>
             <div class="flair"> 
-                {{ event.evnt_flair }}
+                {{ event.flair }}
             </div>
+        </div>  
+    {% endfor %}
+</div>
+
+<div class="events-tab">
+    <p class="events-div-name">
+        Announcements from our end
+    </p>
+    
+    {% for ann in announcements %}
+        <div class="event">
+            <p class="event-title"> {{ ann.ann_name }} <span class="uni-name">{{ ann.uni_name }}</span></p>
         </div>
     {% endfor %}
 </div>
+
+
+
+
 
 {%endblock%}

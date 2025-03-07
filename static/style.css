@@ -41,7 +41,7 @@ a:hover {
 }
 
 a:active{
-  color:white;
+  color:rgb(0, 0, 0);
 }
 
 
@@ -51,6 +51,7 @@ a:active{
   background-color: rgba(86, 179, 234, 0.46);
   border-radius: 20px;
   margin-left: 20px;
+  margin-bottom:10px;
   padding: 10px 12px;
 }
 
@@ -87,4 +88,38 @@ a:active{
   width:100px; 
   padding: 5px 10px;
 
+}
+
+
+/*for admin page */
+
+.admin-title{
+  color:black;
+}
+
+.events-ann{
+  color:black;
+}
+
+
+.links-container{
+  display:flex;
+  flex-direction: row;
+}
+
+.evnt-ann{
+  background-color: rgb(115, 218, 226);
+  max-width: 250px;
+  margin-bottom: 30px;
+  margin-left: 20px;
+  color:white;
+  border-radius: 20px;
+  padding: 12px 10px;
+  box-shadow: 8px 8px 30px grey;
+  cursor:pointer;
+  transition: box-shadow .2s;
+} 
+.evnt-ann:hover{
+  margin-right: 40px;
+  margin-left: 40px;
 }

@@ -6,14 +6,14 @@ app = Flask(__name__)
 app.secret_key = "beep"
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.sqlite3'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.permanent_session_lifetime = timedelta(minutes=5)
+
 
 db = SQLAlchemy(app)
 
 class users(db.Model):  
     id = db.Column(db.Integer, primary_key=True) 
     usr_name = db.Column(db.String, nullable=False, unique=True)  
-    usr_email = db.Column(db.String, nullable=False, unique=True)
+    usr_email = db.Column(db.String, nullable=False)
     role = db.Column(db.String, nullable=False)
 
     def __init__(self, usr_name, usr_email, role):
@@ -31,6 +31,15 @@ class events(db.Model):
         self.evnt_title = evnt_title
         self.evnt_uni = evnt_uni
         self.evnt_flair = evnt_flair
+
+class announcements(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    ann_info = db.Column(db.String,  nullable=False)
+    uni_name = db.Column(db.String,  nullable=False)
+
+    def __init__ (self, ann_info, uni_name):
+        self.ann_info=ann_info
+        self.uni_name=uni_name
 
 @app.route("/")
 def home():
@@ -52,11 +61,11 @@ def view_data():
 @app.route("/admin", methods=["GET"])
 def admin():
     if "role" in session and session["role"] == "admin":
-        return render_template("admin-form.html")
+        return render_template("admin.html")
     #instead of going directly to the admin form or smtn we can make a intermediary page that admins can access and that can hold links to all these forms
     else:
         flash("Access denied. Admin privileges required.", "danger")
-        return render_template("home_page.html")
+        return redirect(url_for("home"))
     
 
 @app.route("/clear_events")
@@ -74,30 +83,44 @@ def clear_events():
     return redirect(url_for("home"))
 
 
-@app.route("/add_event", methods=["POST", "GET"])
+@app.route("/add_event", methods=["POST"])
 def add_event():
-    # if user is admin
     if "role" not in session or session["role"] != "admin":
         flash("Access denied. Admin privileges required.", "danger")
-        return render_template("home_page.html")
-    
+        return redirect(url_for("home"))
+
+    # Get form data
+    event_name = request.form["name"]
+    event_uni = request.form["uni_name"]
+    flair = request.form["flair"]
+
+    # Store event in database
+    new_event = events(event_name, event_uni, flair)
+    db.session.add(new_event)
+    db.session.commit()
+
+    flash("Event added successfully!", "success")
+    return redirect(url_for("admin"))  # Redirect back to admin page
+
+
+@app.route("/add_announcement", methods=["POST","GET"])
+def announcement():
     if request.method == "POST":
-        event_name = request.form["name"]
-        event_uni = request.form["uni_name"]
-        flair = request.form["flair"]
+        ann= request.form["ann_name"]
+        uni_ann=request.form["uni_name"]
         
-        # new event
-        new_event = events(event_name, event_uni, flair)
-        db.session.add(new_event)
+        # new announcement
+        new_announcement = announcements(ann, uni_ann)
+        db.session.add(new_announcement)
         db.session.commit()
         
-        flash("Event added successfully!", "success")
-        return render_template("home_page.html")
-    else:
-        # user is admin and still somehow tries to add events or take admin actions:
-        return redirect(url_for("admin"))
-    
 
+        flash("Announcement added successfully!", "success")
+        return render_template("home_page.html")
+    #else:
+        # user is admin and still somehow tries to add events or take admin actions:
+        #return redirect(url_for("admin"))
+        
 
 
 
@@ -108,30 +131,26 @@ def login():
         usr_email = request.form["user_email"]
         role = request.form["role"]
 
-        if "user_name" in session:
-            flash(f"User already logged in.", "info")
-            return redirect(url_for("home"))
-    
+        found_user = users.query.filter_by(usr_email=usr_email).first()
 
-        found_user = users.query.filter_by(usr_name=usr_nm).first()
         if found_user:
-            session["email"] = found_user.usr_email
+            session["user_name"] = found_user.usr_name
+            session["user_email"] = found_user.usr_email
             session["role"] = found_user.role
+            flash(f"Welcome back, {found_user.usr_name}!", "success")
         else:
-            usr = users(usr_nm, usr_email, role)
-            db.session.add(usr)
+            new_user = users(usr_nm, usr_email, role)
+            db.session.add(new_user)
             db.session.commit()
-            session["email"] = usr_email
+            session["user_name"] = usr_nm
+            session["user_email"] = usr_email
             session["role"] = role
+            flash(f"Welcome, {usr_nm}!", "success")
 
-        session["user_name"] = usr_nm
-        session["user_email"] = usr_email
-
-        flash(f"Welcome {usr_nm}!", "success")
         return redirect(url_for("home"))
-    
 
     return render_template("form.html")
+
 
 @app.route("/logout")
 def logout():
