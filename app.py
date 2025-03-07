@@ -101,7 +101,7 @@ def add_event():
 
     flash("Event added successfully!", "success")
     return redirect(url_for("admin"))  # Redirect back to admin page
-    
+
 
 @app.route("/add_announcement", methods=["POST","GET"])
 def announcement():
@@ -137,7 +137,7 @@ def login():
             session["user_name"] = found_user.usr_name
             session["user_email"] = found_user.usr_email
             session["role"] = found_user.role
-            flash(f"Welcome back, {found_user.usr_name}!", "success")
+            flash(f"Welcome back,{found_user.usr_name}!", "success")
         else:
             new_user = users(usr_nm, usr_email, role)
             db.session.add(new_user)

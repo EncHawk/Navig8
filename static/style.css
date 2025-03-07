@@ -6,7 +6,7 @@ p{
 
 
 .header{
- background-color: rgb(8, 86, 14);
+ background-color: rgb(7, 93, 22);
  display:flex;
  flex-direction: row;
  align-items: top;
@@ -122,4 +122,53 @@ a:active{
 .evnt-ann:hover{
   margin-right: 40px;
   margin-left: 40px;
+}
+
+
+
+/* search box for colleges */
+.search-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: .25rem;
+}
+
+input {
+  font-size: 1rem;
+}
+
+.user-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: .25rem;
+  margin-top: 1rem;
+}
+
+.card {
+  border: 1px solid black;
+  background-color: white;
+  padding: .5rem;
+  cursor:pointer;
+}
+
+.card > .header-card {
+  max-width: 300px;
+}
+
+.anchor-card{
+  max-width: 200px;
+}
+
+.card > .body {
+  font-size: .8rem;
+  color: #777;
+}
+
+.hide {
+  display: none;
+}
+
+
+.image{
+  max-width: 20px;
 }
