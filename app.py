@@ -59,7 +59,9 @@ def home():
     else:
         user_name = None
     berserk_img= os.path.join(app.config['UPLOAD_FOLDER'], 'L.png')
-    return render_template("home_page.html", events=all_events, name=user_name, berserk_img= berserk_img)
+    hustle_img= os.path.join(app.config['UPLOAD_FOLDER'], 'B.png')
+    aspire_img= os.path.join(app.config['UPLOAD_FOLDER'], 'S.png')
+    return render_template("home_page.html", events=all_events, name=user_name, berserk_img= berserk_img, hustle_img=hustle_img, aspire_img=aspire_img)
 
 @app.route("/view_data")
 def view_data():
@@ -139,8 +141,19 @@ def  berserk():
 
 @app.route("/hustler")
 def hustler ():
-    return render_template("hustler.html")
+    hustle0_img=os.path.join(app.config['UPLOAD_FOLDER'], 'B0.png')
+    hustle1_img=os.path.join(app.config['UPLOAD_FOLDER'], 'B1.png')
+    hustle2_img=os.path.join(app.config['UPLOAD_FOLDER'], 'B2.png')
+    hustlei_img=os.path.join(app.config['UPLOAD_FOLDER'], 'Linfo.png')
+    return render_template("hustle.html",hustlei_img=hustlei_img, hustle0_img=hustle0_img, hustle1_img=hustle1_img, hustle2_img=hustle2_img) #dabba will hold the actual variable, container = variable
 
+@app.route("/aspire")
+def aspire():
+    aspire0_img=os.path.join(app.config['UPLOAD_FOLDER'], 'S0.png')
+    aspire1_img=os.path.join(app.config['UPLOAD_FOLDER'], 'S1.png')
+    aspire2_img=os.path.join(app.config['UPLOAD_FOLDER'], 'S2.png')
+    aspirei_img=os.path.join(app.config['UPLOAD_FOLDER'], 'Linfo.png')
+    return render_template("aspire.html",aspirei_img=aspirei_img, aspire0_img=aspire0_img, aspire1_img=aspire1_img, aspire2_img=aspire2_img)
 
 @app.route("/login", methods=["POST", "GET"])
 def login():

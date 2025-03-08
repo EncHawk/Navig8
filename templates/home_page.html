@@ -52,7 +52,10 @@
 {%endblock%}
 
 {%block content%} 
-<h2> this is from the content block</h2>
+
+<em class="name-tag" >Your one stop solution to all college related hassle, <span class="name-comp" >Navig8</span></em>
+
+<h2> Welcome to Navig8</h2>
 
 <hr color="green">
 <div class="events-tab">
@@ -87,6 +90,12 @@
     <input type="search" id="search" placeholder="college name">
 </div>
 
+<div class="list-container  list-group">
+    <a href="/berserk" class="show-text list-group-item list-group-item-action list-group-item-primary ">Berserk University</a>
+    <a href="/hustler" class="list-group-item list-group-item-action list-group-item-primary">Hustlers University</a>
+    <a href="/aspire" class="list-group-item list-group-item-action list-group-item-primary">Aspire University</a>
+  </div>
+
   <div class="images-container">
     <div class="image">
         <a href="/berserk">
@@ -95,11 +104,21 @@
                 <figcaption> Berserk University</figcaption>
             </figure>
         </a>
-
-        <a href="/berserk">
+    </div>
+    <div class="image">
+        <a href="/hustler">
             <figure>
-                <img class="clg-imgs" src= "{{berserk_img}}">
-                <figcaption> Berserk University</figcaption>
+                <img class="clg-imgs" src= "{{hustle_img}}">
+                <figcaption> Hustlers University</figcaption>
+            </figure>
+        </a>
+    </div>
+    
+    <div class="image">
+        <a href="/aspire">
+            <figure>
+                <img class="clg-imgs" src= "{{aspire_img}}">
+                <figcaption> Aspire University</figcaption>
             </figure>
         </a>
     </div>
