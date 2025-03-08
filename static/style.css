@@ -2,7 +2,9 @@ p{
   color:white;
 }
 
-
+body{
+  padding-bottom: 100px;;
+}
 
 
 .header{
@@ -193,14 +195,19 @@ input {
 }
 
 .image{
-  box-shadow: 20 50 50 rgba(0, 0, 0, 0.46);
+  box-shadow: 1px 5px 10px;
+  transition : padding .2s;
+  overflow: hidden;
+} .image:hover{
+  padding: 10px 12px;
+  box-shadow: 5px 8px 20px;
 }
 
- .clg-imgs{
+.clg-imgs{
   display:inline;
   margin: 10px 20px;
   width:200px; 
-  box-shadow: 10 50 10 rgba(0, 0, 0, 0.46);
+  
 }
 
 figcaption{
