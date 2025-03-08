@@ -61,7 +61,9 @@ def home():
     berserk_img= os.path.join(app.config['UPLOAD_FOLDER'], 'L.png')
     hustle_img= os.path.join(app.config['UPLOAD_FOLDER'], 'B.png')
     aspire_img= os.path.join(app.config['UPLOAD_FOLDER'], 'S.png')
-    return render_template("home_page.html", events=all_events, name=user_name, berserk_img= berserk_img, hustle_img=hustle_img, aspire_img=aspire_img)
+    dilip_img= os.path.join(app.config['UPLOAD_FOLDER'], 'dilip.png')
+    eric_img =os.path.join(app.config['UPLOAD_FOLDER'], 'eric.png')
+    return render_template("home_page.html", events=all_events, name=user_name, berserk_img= berserk_img, hustle_img=hustle_img, aspire_img=aspire_img, dilip_img=dilip_img, eric_img =eric_img  )
 
 @app.route("/view_data")
 def view_data():

@@ -43,34 +43,41 @@
             </div>
         {%endif%}
     </div>
+
+    <div class="admin-link">
+        <p>
+            <a href="/admin">
+                Admin
+            </a>
+        </p>
+    </div>
+
     <div>
-        <a href="/logout"> Logout</a>
+        <a href="/logout"> 
+            Logout
+        </a>
     </div>
 
 </div>
+
+
 
 {%endblock%}
 
 {%block content%} 
 
 <em class="name-tag" >Your one stop solution to all college related hassle, <span class="name-comp" >Navig8</span></em>
-
-<h2> Welcome to Navig8</h2>
-
 <hr color="green">
-<div class="events-tab">
-    <p class="events-div-name">
-        Events are as follows
+
+<h2> Welcome to <i> Navig8 </i></h2>
+
+<div>
+    <p style="color:black;  margin-bottom:10px ; margin-top: 30px;">
+        We have a library of Universities for you to ponder.
     </p>
-    
-    {% for event in events %}
-        <div class="event">
-            <p class="event-title"> {{event.evnt_title}} <span class="uni-name">{{ event.evnt_uni }}</span></p>
-            <div class="flair"> 
-                {{event.evnt_flair}}
-            </div>
-        </div>  
-    {% endfor %}
+    <p style="color:black; text-decoration: underline; text-decoration-style:wavy ; text-decoration-color: rgb(1, 59, 59);">
+        Your future is safe with Navig8, try out our new map feature below :)
+    </p>
 </div>
 
 <div class="announcement-tab">
@@ -124,6 +131,48 @@
     </div>
 
   </div>
+
+
+  <div class="events-tab">
+    <p class="events-div-name">
+        Events are as follows
+    </p>
+    
+    {% for event in events %}
+        <div class="event">
+            <p class="event-title"> {{event.evnt_title}} <span class="uni-name">{{ event.evnt_uni }}</span></p>
+            <div class="flair"> 
+                {{event.evnt_flair}}
+            </div>
+        </div>  
+    {% endfor %}
+</div>
+
+<p>
+    Contributors of Navig8 : 
+</p>
+<div class="card-flex">
+    <div class=" card" style="width: 18rem;">
+        <img src="{{dilip_img}}" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Dilip Kumar R</h5>
+          <p class="card-text" style="color:black">Aspiring Full-stack Developer, LLMs, Deep Learning, Agentic workflow are things that fascinate me </p>
+          <a href="https://x.com/D_Leap07" class="btn btn-primary"> Twitter handle</a>
+        </div>
+      </div>
+    
+      <div class="card" style="width: 18rem;">
+        <img src="{{eric_img}}" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Eric Thithio</h5>
+          <p class="card-text" style="color:black"> Creative thinking is my ikigai, video-editing , graphic design and gaming are things I cannott live without </p>
+          <a href="https://x.com/D_Leap07" class="btn btn-primary"> Telegram handle </a>
+        </div>
+      </div>
+</div>
+
+
+
 
 
 {%endblock%}
